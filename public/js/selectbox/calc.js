@@ -205,10 +205,10 @@ $(document).ready(function () {
 
             $('.m_a_c__stavka').text(Procent + '%');
             $('.m_a_c__srok').text(srok);
-            $('.m_a_c__platej').text(new Intl.NumberFormat('ru-RU').format( platej ) + ' ₸');
-            $('.m_a_c__pereplata').text(new Intl.NumberFormat('ru-RU').format( vuplata ) + ' ₸');
-            $('.m_a_c__vuplata').text(new Intl.NumberFormat('ru-RU').format(Math.round(Price * Koff) * Mouth) + ' ₸');
-            $('.m_a_c__price').text(new Intl.NumberFormat('ru-RU').format(Price) + ' ₸'); // только для mod_axeld_form
+            $('.m_a_c__platej').text(new Intl.NumberFormat('ru-RU').format( platej ) + ' $');
+            $('.m_a_c__pereplata').text(new Intl.NumberFormat('ru-RU').format( vuplata ) + ' $');
+            $('.m_a_c__vuplata').text(new Intl.NumberFormat('ru-RU').format(Math.round(Price * Koff) * Mouth) + ' $');
+            $('.m_a_c__price').text(new Intl.NumberFormat('ru-RU').format(Price) + ' $'); // только для mod_axeld_form
 
             let Progressbar = 100 - (Math.round(Price / platej));
 
@@ -224,9 +224,9 @@ $(document).ready(function () {
 
             $('input[name="bet"]').val(Procent + '%');
             $('input[name="term"]').val(srok);
-            $('input[name="monthly_payment"]').val(new Intl.NumberFormat('ru-RU').format( platej ) + ' ₸');
-            $('input[name="overpayment"]').val(new Intl.NumberFormat('ru-RU').format( vuplata ) + ' ₸');
-            $('input[name="total_payout"]').val(new Intl.NumberFormat('ru-RU').format(Price) + ' ₸');
+            $('input[name="monthly_payment"]').val(new Intl.NumberFormat('ru-RU').format( platej ) + ' $');
+            $('input[name="overpayment"]').val(new Intl.NumberFormat('ru-RU').format( vuplata ) + ' $');
+            $('input[name="total_payout"]').val(new Intl.NumberFormat('ru-RU').format(Price) + ' $');
 
 
 

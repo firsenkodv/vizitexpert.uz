@@ -17,11 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/config/currency
-/config/seo
-/config/surveys
-/config/tourvisor
-/config/vars
 /docs
 
 # рабочие артефакты Claude/Playwright — скриншоты и логи браузера,

@@ -54,7 +54,7 @@ class TourvisorController extends Controller
         $api = new Tourvisor();
         $departures = $api->getDeparture();
         $countries = $api->getCountry();
-        $regions = $api->getRegions()->lists->regions->region;
+        $regions = $api->getRegions()->lists->regions->region ?? [];
 
         $hotels = [];
        // $hotels = $api->getHotels()->lists->hotels->hotel;
@@ -113,7 +113,7 @@ class TourvisorController extends Controller
         $api = new Tourvisor();
         $departures = $api->getDeparture();
         $countries = $api->getCountry();
-        $regions = $api->getRegions()->lists->regions->region;
+        $regions = $api->getRegions()->lists->regions->region ?? [];
         $hotels = [];
 
         $daterange = [date('d.m.Y', strtotime("+1 day")), date('d.m.Y', strtotime("+7 day"))];

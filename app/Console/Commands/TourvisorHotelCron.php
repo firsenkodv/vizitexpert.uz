@@ -51,7 +51,7 @@ class TourvisorHotelCron extends Command
                 $result = $t->_getHotel($query, $script);
                 if ($result) {
                     $all = [];
-                    $r = $result->lists->hotels->hotel;
+                    $r = $result->lists->hotels->hotel ?? [];
                     $array = [];
                     foreach ($r as $k => $item) {
                         $hotel = $t->getHotel($item->id);

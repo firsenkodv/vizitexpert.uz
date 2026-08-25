@@ -42,6 +42,8 @@ class CountryController extends Controller
         $country = CountryViewModel::make()->OneCountry($slug);
         $subcountries = CountryViewModel::make()->SubCountries($slug);
 
+        abort_if(!$country, 404);
+
         return view('pages.countries.country', [
             'country' => $country,
             'subcountries' => $subcountries,
@@ -64,21 +66,23 @@ class CountryController extends Controller
 
         $hot_category = CountryViewModel::make()->HotCategoryRelation($slug_subcountry); // курорт страны (подлкатегория страны)
 
-
+        abort_if(!$country || !$hot_category, 404);
 
         $subcountries = CountryViewModel::make()->SubCountries($slug_country); // подкатегории страны
 
-        //$resorts = $hot_category->resorts; // список курортов, отелей, экскурсий, полезного
-        $resorts = (count($hot_category->resorts))?$hot_category->resorts()->paginate(20):[];
+        // Проверяем наличие через exists() — это SQL COUNT. Раньше стояло
+        // count($hot_category->hotels), то есть связь целиком поднималась
+        // в память ради одного числа: у «Отелей России» это 33 тысячи
+        // записей, и страница падала на memory_limit.
+        $resorts = $hot_category->resorts()->exists() ? $hot_category->resorts()->paginate(20) : [];
 
-        //$excursions = $hot_category->excursions; // список курортов, отелей, экскурсий, полезного
-        $excursions = (count($hot_category->excursions))?$hot_category->excursions()->paginate(20):[];
+        $excursions = $hot_category->excursions()->exists() ? $hot_category->excursions()->paginate(20) : [];
 
-        //$hotels = $hot_category->hotels; // список курортов, отелей, экскурсий, полезного
-        $hotels = (count($hot_category->hotels))?$hot_category->hotels()->orderBy('imagescount', 'DESC')->orderBy('stars', 'DESC')->orderBy('desc', 'DESC')->orderBy('rating', 'DESC')->paginate(20):[];
+        $hotels = $hot_category->hotels()->exists()
+            ? $hot_category->hotels()->orderBy('imagescount', 'DESC')->orderBy('stars', 'DESC')->orderBy('desc', 'DESC')->orderBy('rating', 'DESC')->paginate(20)
+            : [];
 
-        //$infos = $hot_category->infos; // список курортов, отелей, экскурсий, полезного
-        $infos = (count($hot_category->infos))?$hot_category->infos()->paginate(20):[];
+        $infos = $hot_category->infos()->exists() ? $hot_category->infos()->paginate(20) : [];
 
         return view('pages.countries.category', [
             'hot_category' => $hot_category,
@@ -103,26 +107,20 @@ class CountryController extends Controller
         $hot_category = CountryViewModel::make()->HotCategoryRelation($slug_subcountry);  // курорт страны (подлкатегория страны)
         $subcountries = CountryViewModel::make()->SubCountries($slug_country); // подкатегории страны
 
-        settype($resorts, "array");
-        settype($excursions, "array");
-        settype($hotels, "array");
-        settype($infos, "array");
+        abort_if(!$country || !$hot_category, 404);
 
-        //$resorts = $hot_category->resorts()->where('slug', $slug_subcountry__item)->where('published', 1)->first();
-        if (isset($hot_category->resorts)){
-            $resorts = (count($hot_category->resorts)) ? $hot_category->resorts()->get() : [];
-         }
+        // material подбирается ниже в одной из четырёх веток; если слаг
+        // не совпал ни с одним материалом, переменная так и останется пустой
+        $item = null;
 
-        if (isset($hot_category->excursions)) {
-            $excursions = (count($hot_category->excursions)) ? $hot_category->excursions()->get() : [];
-        }
-
-        if (isset($hot_category->hotels)) {
-            $hotels = (count($hot_category->hotels)) ? $hot_category->hotels()->get() : [];
-        }
-        if (isset($hot_category->infos)) {
-            $infos = (count($hot_category->infos)) ? $hot_category->infos()->get() : [];
-        }
+        // Ниже эти четыре переменные нужны только как признак «в этой
+        // подкатегории есть материалы такого типа», сами списки не выводятся.
+        // Поэтому спрашиваем базу через exists(), а не тянем связь целиком:
+        // у «Отелей России» в ней 33 тысячи строк.
+        $resorts = $hot_category->resorts()->exists();
+        $excursions = $hot_category->excursions()->exists();
+        $hotels = $hot_category->hotels()->exists();
+        $infos = $hot_category->infos()->exists();
 
         $view = 'pages.countries.item';
 
@@ -154,6 +152,8 @@ class CountryController extends Controller
 
         }
 
+
+        abort_if(!$item, 404);
 
         return view($view, [
             'hot_category' => $hot_category,

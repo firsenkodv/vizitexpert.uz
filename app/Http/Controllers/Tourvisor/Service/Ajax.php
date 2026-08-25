@@ -32,8 +32,14 @@ class Ajax
         } else {
             $result = $this->api->getRegions($params['country_id']);
             $hotels = $this->api->getHotels($params['country_id']);
-            $result->lists->hotels = $hotels->lists->hotels;
-            $result->regions = $this->getRegionsHtml($result->lists->regions->region);
+
+            // API мог не ответить: отдаём пустой список, а не роняем запрос
+            if (!is_object($result)) {
+                return (object) ['lists' => (object) ['hotels' => $hotels->lists->hotels ?? []], 'regions' => ''];
+            }
+
+            $result->lists->hotels = $hotels->lists->hotels ?? [];
+            $result->regions = $this->getRegionsHtml($result->lists->regions->region ?? []);
 
             return $result;
         }

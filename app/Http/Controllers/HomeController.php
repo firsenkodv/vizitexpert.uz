@@ -21,7 +21,10 @@ class HomeController extends Controller
         $departures = $api->getDeparture();
         $countries = $api->getCountry();
 
-        $regions = $api->getRegions()->lists->regions->region;
+        // Tourvisor может не ответить или отклонить авторизацию — тогда
+        // getRegions() возвращает false. Без запасного значения главная
+        // отдаёт 500 целиком из-за одного недоступного справочника.
+        $regions = $api->getRegions()->lists->regions->region ?? [];
         $hotels = [];
 
         $daterange = [date('d.m.Y', strtotime("+1 day")), date('d.m.Y', strtotime("+7 day"))];

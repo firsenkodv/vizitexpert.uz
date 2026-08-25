@@ -21,6 +21,11 @@ class DumpController extends Controller
          **/
 
         $category = DumpViewModel::make()->OneDump($slug);
+
+        // несуществующий или снятый с публикации раздел — это 404,
+        // а не 500 из-за обращения к свойству на null
+        abort_if(!$category, 404);
+
         $publs = (count($category->publs))?$category->publs()->orderBy('created_at', 'DESC')->paginate(20):[];
         $top_category = config('links.link.dump');
         $calc =  DumpViewModel::make()->calc();
@@ -42,6 +47,9 @@ class DumpController extends Controller
          **/
         $category = DumpViewModel::make()->OneDump($slug_category);
         $item = PublViewModel::make()->OnePubl($slug_category__item);  // материал
+
+        abort_if(!$category || !$item, 404);
+
         $top_category = config('links.link.dump');
 
         return view('pages.dumps.item', [
@@ -87,6 +95,8 @@ class DumpController extends Controller
             return redirect($category->redirect);
         }
 
+        abort_if(!$category, 404);
+
         $publs = (count($category->companies))?$category->companies()->orderBy('created_at', 'DESC')->paginate(20):[];
 
         $top_category = config('links.link.dump2');
@@ -110,6 +120,9 @@ class DumpController extends Controller
          **/
         $category = Dump2ViewModel::make()->OneDump2($slug_category);
         $item = CompanyViewModel::make()->OneCompany($slug_category__item);  // материал
+
+        abort_if(!$category || !$item, 404);
+
         $top_category = config('links.link.dump2');
 
         return view('pages.dumps.item', [

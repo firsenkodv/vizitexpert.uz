@@ -28,6 +28,9 @@ class TourController extends Controller
 
         $item = TourViewModel::make()->OneTour($slug);
 
+        // несуществующий слаг — 404, иначе itemTemplate() на null даёт 500
+        abort_if(!$item, 404);
+
         return view('pages.tours.item', [
             'item' => $item,
             'template' => $item->itemTemplate(),
