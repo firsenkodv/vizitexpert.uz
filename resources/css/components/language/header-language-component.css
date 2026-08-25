@@ -1,0 +1,48 @@
+@charset "UTF-8";
+/* Google Website Translator подставляет свою верхнюю панель и сдвигает body —
+   прячем её. Селектор font нужен потому, что переведённый текст Google
+   оборачивает в <font>, и тот наследует не наши размеры. */
+body {
+  top: 0 !important;
+}
+
+.skiptranslate {
+  display: none !important;
+  height: 0;
+}
+
+.language_header-language-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #eeeeee;
+}
+.language_header-language-component .language__img {
+  margin: 0 4px;
+  position: relative;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.language_header-language-component .language__img font {
+  font-size: inherit;
+}
+.language_header-language-component .language__img:hover {
+  color: #fff;
+}
+.language_header-language-component .language__img.language__img_active {
+  color: #fff;
+  font-weight: 400;
+  font-size: 16px;
+  font-style: normal;
+}
+.language_header-language-component .language__img.language__img_active:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #EF533F;
+  bottom: -3px;
+  position: absolute;
+}
+
+/*# sourceMappingURL=header-language-component.css.map */
