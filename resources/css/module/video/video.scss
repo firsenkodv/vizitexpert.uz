@@ -40,7 +40,12 @@
         height: auto;
         margin: 0 auto;
 
-        video {
+        // iframe — ролик с YouTube, video — прежний локальный файл
+        video,
+        iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
             border-radius: 24px !important;
             border: 8px solid $colorOrange !important;
             background:  $colorOrange;

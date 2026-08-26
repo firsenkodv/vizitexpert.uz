@@ -6,10 +6,18 @@
 
     <div class="v_vid__wrapper">
         <div class="v_vid__video">
-            <video controls width="100%" height="484" preload="none"  poster="{{ asset('/video/poster.jpg') }}" onclick="this.play();">
-                <source src="{{ asset('/video/hottour.mp4') }}" type="video/mp4">
-                Ваш браузер не поддерживает встроенные видео :(
-            </video>
+            {{-- Ролик с YouTube вместо локального public/video/hottour.mp4.
+                 Файл и постер оставлены на месте — для отката достаточно
+                 вернуть тег <video>. --}}
+            @external('youtube')
+                <iframe src="https://www.youtube.com/embed/P9LHR1sES2Y"
+                        title="{{ __('Почему выбирают нас?') }}"
+                        loading="lazy" allowfullscreen
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            @else
+                <x-external.disabled service="Видео YouTube"/>
+            @endexternal
          </div>
 
         <div class="v_vid__flickity">

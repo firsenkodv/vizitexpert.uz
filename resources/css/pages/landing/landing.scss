@@ -269,10 +269,14 @@
         overflow: hidden;
         background: #000;
 
-        video {
+        // iframe — ролик с YouTube, video — прежний локальный файл
+        video,
+        iframe {
             display: block;
             width: 100%;
             height: auto;
+            aspect-ratio: 16 / 9;
+            border: 0;
         }
     }
 

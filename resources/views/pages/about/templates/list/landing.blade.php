@@ -119,11 +119,17 @@
             @endif
 
             <div class="landing__video">
-                <video controls preload="none" width="1120" height="560"
-                       poster="{{ asset('/video/poster.jpg') }}" onclick="this.play();">
-                    <source src="{{ asset('/video/hottour.mp4') }}" type="video/mp4">
-                    Ваш браузер не поддерживает встроенные видео :(
-                </video>
+                {{-- Ролик с YouTube вместо локального public/video/hottour.mp4,
+                     тот же, что в блоке на главной (include/module/index_video). --}}
+                @external('youtube')
+                    <iframe src="https://www.youtube.com/embed/P9LHR1sES2Y"
+                            title="{{ $page->adv_title ? strip_tags($page->adv_title) : __('О нас') }}"
+                            loading="lazy" allowfullscreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                @else
+                    <x-external.disabled service="Видео YouTube"/>
+                @endexternal
             </div>
 
             @if(!empty($page->adv_cards))

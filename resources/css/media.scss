@@ -633,9 +633,11 @@
         display: none;
     }
     .v_vid .v_vid__video {
-        video {
+        video,
+        iframe {
             width: 100%;
             height: auto;
+            aspect-ratio: 16 / 9;
         }
 
     }
