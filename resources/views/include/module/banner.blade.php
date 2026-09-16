@@ -56,7 +56,7 @@
                         <div class="b_banner__right_flex">
                             <div class="b_banner__right_flex__left">
                                 <span class="h2 ">Наш Телеграм</span>
-                                <span class="s_p"><span class="swiper-no-swiping"><a target="_blank" href="{{ (isset($setting['telegram']))? $setting['telegram'] : ''  }}">@vizitexpert.kz</a></span></span>
+                                <span class="s_p"><span class="swiper-no-swiping"><a target="_blank" href="{{ (isset($setting['telegram']))? $setting['telegram'] : ''  }}">@vizitexpertkz</a></span></span>
                             </div>
                             <div class="b_banner__right_flex__right">
 
