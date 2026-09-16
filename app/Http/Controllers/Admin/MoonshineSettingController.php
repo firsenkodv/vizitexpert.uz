@@ -34,6 +34,7 @@ final class MoonshineSettingController extends Controller
                 'idn'=> (isset($request->idn))? $request->idn :null,
                 'phone1'=> (isset($request->phone1))? $request->phone1 :null,
                 'phone2'=> (isset($request->phone2))? $request->phone2 :null,
+                'email'=> (isset($request->email))? $request->email :null,
                 'company_name'=> (isset($request->company_name))? $request->company_name :null,
                 'bin'=> (isset($request->bin))? $request->bin :null,
                 'whatsapp'=> (isset($request->whatsapp))? $request->whatsapp :null,

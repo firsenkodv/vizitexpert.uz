@@ -72,17 +72,24 @@
                                             class="color_grey_16 color_grey  contact_area__label">{{__('Город:')}}</div>
                                         <div class="property">{{$contact->title}}</div>
                                     @endif
-                                    @if($contact->data_email)
-                                        @foreach($contact->data_email as $k => $property)
-                                            <div
-                                                class="pad_t24_important color_grey_16 color_grey contact_area__label">{{__('E-mail:')}}</div>
-                                            <div class="property">{{$property['jt1']}}</div>
-                                        @endforeach
-                                    @else
+                                    {{-- Почта: главное — то, что заведено у самого города в «Контактной
+                                         информации». Общий адрес из «Настроек сайта → Контакты» —
+                                         только запасной, для городов с пустым полем. --}}
+                                    @php
+                                        $emails = array_filter(
+                                            filled($contact->data_email)
+                                                ? collect($contact->data_email)->pluck('jt1')->all()
+                                                : [$contact->email]
+                                        );
+
+                                        $emails = $emails ?: array_filter([$setting['email'] ?? null]);
+                                    @endphp
+
+                                    @foreach(array_filter($emails) as $email)
                                         <div
                                             class="pad_t24_important color_grey_16 color_grey contact_area__label">{{__('E-mail:')}}</div>
-                                        <div class="property">{{$contact->email}}</div>
-                                    @endif
+                                        <div class="property">{{ $email }}</div>
+                                    @endforeach
 
                                     @if($contact->skype)
                                         <div

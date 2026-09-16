@@ -137,6 +137,10 @@ class MoonshineSettingPage extends Page
 
                                         Text::make(__('Телефон2'), 'phone2')->default($value('phone2')),
 
+                                        Text::make(__('E-mail'), 'email')
+                                            ->default($value('email'))
+                                            ->hint(__('Общая почта компании, выводится на странице «Контакты»')),
+
                                         Text::make(__('Название компании'), 'company_name')
                                             ->default($value('company_name'))
                                             ->unescape(),

@@ -22,6 +22,7 @@ class MoonshineSetting extends Model
         'idn',
         'phone1',
         'phone2',
+        'email',
         'whatsapp',
         'telegram',
         'facebook',
